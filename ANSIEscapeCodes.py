@@ -1,3 +1,6 @@
+CURSOR_UP = "\x1b[1A"
+DEL_LINE = "\x1b[2K"
+
 BLACK = "\033[0;30m"
 RED = "\033[0;31m"
 GREEN = "\033[0;32m"
@@ -14,11 +17,14 @@ LIGHT_BLUE = "\033[1;34m"
 LIGHT_PURPLE = "\033[1;35m"
 LIGHT_CYAN = "\033[1;36m"
 LIGHT_WHITE = "\033[1;37m"
+
 BOLD = "\033[1m"
 FAINT = "\033[2m"
 ITALIC = "\033[3m"
+
 UNDERLINE = "\033[4m"
 BLINK = "\033[5m"
 NEGATIVE = "\033[7m"
 CROSSED = "\033[9m"
+
 END = "\033[0m"
