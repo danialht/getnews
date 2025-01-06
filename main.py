@@ -1,5 +1,6 @@
 from datetime import date
 from utils import get_nonempty_sections, print_section
+from rich.console import Console
 
 def main():
     """
@@ -8,11 +9,12 @@ def main():
     """
     today_date = date.today()
     
-    # url = "https://tldr.tech/tech/" + today_date.strftime("%Y-%m-%d")
-    url = "https://tldr.tech/tech/2025-01-03"
+    url = "https://tldr.tech/tech/" + today_date.strftime("%Y-%m-%d")
+    print(url)
+    console = Console()
 
     for section in get_nonempty_sections(url):
-        if not print_section(section):
+        if not print_section(section, console):
             break
 
 if __name__ == "__main__":

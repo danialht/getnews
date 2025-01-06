@@ -1,9 +1,16 @@
-from bs4 import BeautifulSoup, Tag
 import sys
 import requests
 from typing import Generator
+
+from bs4 import BeautifulSoup, Tag
+
 from getch import getch
 import ANSIEscapeCodes
+
+from rich import print as rich_print
+from rich.markdown import Markdown
+from rich.console import Console
+
 
 def delete_last_lines(count: int) -> None:
     """Use this function to delete the last line in the STDOUT using ansi escapse codes"""
@@ -25,23 +32,31 @@ def get_nonempty_sections(url: str) -> Generator:
         if len(section):
             yield section
 
-def print_article(article: Tag) -> None:
+def print_article(article: Tag, console: Console) -> None:
     """
     Printing the article 
     """
-    print("" + article.a.text)
-    print(article.div.text)
+    title = article.a.text
+    body = article.div.text
+    
+    console.print(title, style = 'bold', justify = 'center')
+    rich_print(body)
 
-def print_section(section: Tag) -> bool:
+def print_section(section: Tag, console: Console) -> bool:
     """
     Outputs a section on terminal and returns True if the user
     wants to continue getting feed or False otherwise (in case
     of keyboard interrupts like cntrl-C or pressing Q)
     """
-    print(section.header.text, '\n')
+    section_header = section.header.text
+    
+    if len(section_header.strip()):
+        section_header = Markdown('# ' + section_header + '\n')
+    console.print(section_header)
+
     articles = section.find_all('article')
     for article in articles:
-        print_article(article)
+        print_article(article, console)
         try:
             # Getting input for next article
             # Printing the text with negative colors in background and foreground
